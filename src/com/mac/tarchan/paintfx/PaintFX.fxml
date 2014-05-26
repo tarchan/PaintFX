@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.mac.tarchan.paintfx.PaintFXController">
+  <children>
+    <MenuBar useSystemMenuBar="true" VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="ファイル">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#onClose" text="閉じる">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="W" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
+            <MenuItem mnemonicParsing="false" onAction="#onSave" text="保存">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="S" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="編集">
+          <items>
+            <MenuItem mnemonicParsing="false" text="削除" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="ヘルプ">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#onAbout" text="バージョン情報" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <ScrollPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+      <content>
+        <ImageView id="canvas" fx:id="view" fitHeight="600.0" fitWidth="800.0" onMouseDragged="#onDragged" pickOnBounds="true" preserveRatio="true" />
+      </content>
+    </ScrollPane>
+  </children>
+</VBox>
