@@ -11,32 +11,48 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
+import javafx.geometry.Point2D;
+import javafx.scene.Group;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 /**
- *
- * @author v-togura
+ * PaintFXController
+ * 
+ * @author tarchan
  */
 public class PaintFXController implements Initializable {
     
-    private WritableImage canvas;
+    private Canvas canvas;
     @FXML
-    private ImageView view;
+    private Group group;
+    @FXML
+    private Label status;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        canvas = new WritableImage(1024, 1024);
-        view.setImage(canvas);
+        canvas = new Canvas(1024, 1024);
+        group.getChildren().add(canvas);
     }    
 
     @FXML
     private void onDragged(MouseEvent event) {
-        PixelWriter px = canvas.getPixelWriter();
-        px.setColor((int)event.getX(), (int)event.getY(), Color.BLACK);
+//        PixelWriter px = canvas.getPixelWriter();
+//        px.setColor((int)event.getSceneX(), (int)event.getSceneY(), Color.BLACK);
+        GraphicsContext g = canvas.getGraphicsContext2D();
+//        Point2D p = group.getLocalToParentTransform().transform(event.getSceneX(), event.getSceneY());
+//        Point2D p2 = group.getLocalToSceneTransform().transform(event.getSceneX(), event.getSceneY());
+        Point2D p = canvas.sceneToLocal(event.getSceneX(), event.getSceneY());
+        g.fillRect(p.getX(), p.getY(), 1, 1);
+        status.setText(String.format("(%s,%s)", p.getX(), p.getY()));
+//        group.getParent().getLocalToSceneTransform();
+    }
+
+    @FXML
+    private void onNew(ActionEvent event) {
+        // TODO キャンバスサイズを設定するダイアログ
     }
 
     @FXML
@@ -49,5 +65,6 @@ public class PaintFXController implements Initializable {
 
     @FXML
     private void onAbout(ActionEvent event) {
+        // アプリケーション情報ダイアログ
     }
 }

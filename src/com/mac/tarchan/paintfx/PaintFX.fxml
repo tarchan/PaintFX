@@ -2,6 +2,7 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -14,6 +15,12 @@
       <menus>
         <Menu mnemonicParsing="false" text="ファイル">
           <items>
+            <MenuItem mnemonicParsing="false" onAction="#onNew" style="" text="新規">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="N" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
+            <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#onClose" text="閉じる">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="W" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
@@ -38,10 +45,18 @@
         </Menu>
       </menus>
     </MenuBar>
-    <ScrollPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+    <ScrollPane prefHeight="200.0" prefWidth="200.0" style="" VBox.vgrow="ALWAYS">
       <content>
-        <ImageView id="canvas" fx:id="view" fitHeight="600.0" fitWidth="800.0" onMouseDragged="#onDragged" pickOnBounds="true" preserveRatio="true" />
+        <Group id="Group" fx:id="group" onMouseDragged="#onDragged" style="" />
       </content>
     </ScrollPane>
+    <BorderPane prefHeight="20.0" prefWidth="200.0" VBox.vgrow="NEVER">
+      <left>
+        <Label fx:id="status" text="OK" BorderPane.alignment="CENTER_LEFT" />
+      </left>
+      <padding>
+        <Insets left="8.0" right="8.0" />
+      </padding>
+    </BorderPane>
   </children>
 </VBox>
