@@ -45,13 +45,11 @@
         <Group id="Group" fx:id="group" onMouseDragged="#onDragged" onMousePressed="#onPressed" style="" />
       </content>
     </ScrollPane>
-    <BorderPane prefHeight="20.0" prefWidth="200.0" VBox.vgrow="NEVER">
-      <left>
-        <Label fx:id="status" text="OK" BorderPane.alignment="CENTER_LEFT" />
-      </left>
-      <padding>
-        <Insets left="8.0" right="8.0" />
-      </padding>
-    </BorderPane>
+    <ToolBar>
+      <items>
+        <Label fx:id="status" text="OK" />
+        <ColorPicker fx:id="colorPicker" editable="false" promptText="" />
+      </items>
+    </ToolBar>
   </children>
 </VBox>
