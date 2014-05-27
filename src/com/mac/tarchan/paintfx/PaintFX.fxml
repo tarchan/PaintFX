@@ -21,11 +21,6 @@
               </accelerator>
             </MenuItem>
             <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" onAction="#onClose" text="閉じる">
-              <accelerator>
-                <KeyCodeCombination alt="UP" code="W" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
-              </accelerator>
-            </MenuItem>
             <MenuItem mnemonicParsing="false" onAction="#onSave" text="保存">
               <accelerator>
                 <KeyCodeCombination alt="UP" code="S" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
@@ -47,7 +42,7 @@
     </MenuBar>
     <ScrollPane prefHeight="200.0" prefWidth="200.0" style="" VBox.vgrow="ALWAYS">
       <content>
-        <Group id="Group" fx:id="group" onMouseDragged="#onDragged" style="" />
+        <Group id="Group" fx:id="group" onMouseDragged="#onDragged" onMousePressed="#onPressed" style="" />
       </content>
     </ScrollPane>
     <BorderPane prefHeight="20.0" prefWidth="200.0" VBox.vgrow="NEVER">
