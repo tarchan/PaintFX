@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
@@ -28,9 +29,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
@@ -52,13 +56,15 @@ public class PaintFXController implements Initializable {
     private File savedFile;
 //    private List<Float> widths;
     @FXML
-    private Group group;
+    private Pane group;
     @FXML
     private Label status;
     @FXML
     private ColorPicker colorPicker;
     @FXML
     private ComboBox<Float> widthPicker;
+    @FXML
+    private ScrollPane scroll;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -66,6 +72,7 @@ public class PaintFXController implements Initializable {
         widthPicker.setItems(FXCollections.observableArrayList(0.1f, 0.5f, 1f, 2f, 5f, 10f, 20f));
         widthPicker.selectionModelProperty().get().select(1.0f);
         canvas = new Canvas(1024, 1024);
+        StackPane.setAlignment(canvas, Pos.CENTER);
         group.getChildren().add(canvas);
         colorPicker.setValue(Color.BLACK);
         

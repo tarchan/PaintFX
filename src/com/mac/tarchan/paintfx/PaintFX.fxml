@@ -41,9 +41,9 @@
         </Menu>
       </menus>
     </MenuBar>
-    <ScrollPane prefHeight="200.0" prefWidth="200.0" style="" VBox.vgrow="ALWAYS">
+    <ScrollPane fx:id="scroll" prefHeight="200.0" prefWidth="200.0" style="" VBox.vgrow="ALWAYS">
       <content>
-        <Group id="Group" fx:id="group" onMouseDragged="#onDragged" onMouseMoved="#onMoved" onMousePressed="#onPressed" style="" />
+        <StackPane fx:id="group" alignment="CENTER_RIGHT" onMouseDragged="#onDragged" onMouseMoved="#onMoved" onMousePressed="#onPressed" prefHeight="150.0" prefWidth="200.0" />
       </content>
     </ScrollPane>
     <ToolBar>
