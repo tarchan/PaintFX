@@ -23,6 +23,7 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
@@ -80,8 +81,8 @@ public class PaintFXController implements Initializable {
     @FXML
     private void onPressed(MouseEvent event) {
         o = new Point2D(event.getX(), event.getY());
-//        GraphicsContext g = canvas.getGraphicsContext2D();
-//        g.moveTo(o.getX(), o.getY());
+        GraphicsContext g = canvas.getGraphicsContext2D();
+        g.moveTo(o.getX(), o.getY());
     }
 
     @FXML
@@ -89,6 +90,11 @@ public class PaintFXController implements Initializable {
 //        PixelWriter px = canvas.getPixelWriter();
 //        px.setColor((int)event.getSceneX(), (int)event.getSceneY(), Color.BLACK);
         GraphicsContext g = canvas.getGraphicsContext2D();
+//        BoxBlur blur = new BoxBlur();
+//        blur.setWidth(1);
+//        blur.setHeight(1);
+//        blur.setIterations(1);
+//        g.setEffect(blur);
 //        Point2D p = group.getLocalToParentTransform().transform(event.getSceneX(), event.getSceneY());
 //        Point2D p2 = group.getLocalToSceneTransform().transform(event.getSceneX(), event.getSceneY());
 //        Point2D p = canvas.sceneToLocal(event.getSceneX(), event.getSceneY());
@@ -96,9 +102,10 @@ public class PaintFXController implements Initializable {
 //        g.fillRect(p.getX(), p.getY(), 1, 1);
         g.setFill(Color.RED);
         g.setStroke(Color.BLACK);
-        g.setLineWidth(5);
-//        g.lineTo(p.getX(), p.getY());
-        g.strokeLine(o.getX(), o.getY(), p.getX(), p.getY());
+        g.setLineWidth(1);
+        g.lineTo(p.getX(), p.getY());
+        g.stroke();
+//        g.strokeLine(o.getX(), o.getY(), p.getX(), p.getY());
         o = p;
         status.setText(String.format("(%s,%s)", p.getX(), p.getY()));
 //        group.getParent().getLocalToSceneTransform();
