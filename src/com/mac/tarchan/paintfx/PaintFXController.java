@@ -25,10 +25,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 
@@ -80,6 +82,16 @@ public class PaintFXController implements Initializable {
         canvas = new Canvas(1024, 1024);
         group.getChildren().add(canvas);
         colorPicker.setValue(Color.BLACK);
+        
+        SVGPath svg = new SVGPath();
+        svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
+            + "L210,90 L180,120 L170,110 L170,200 L70,200 L70,110 L60,120 L30,90"
+            + "L70,50");
+        svg.setStroke(Color.DARKGREY);
+        svg.setStrokeWidth(2);
+        svg.setEffect(new DropShadow());
+        svg.setFill(colorPicker.getValue());
+        group.getChildren().add(svg);
     }    
 
     @FXML
