@@ -10,9 +10,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,14 +26,14 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.effect.BoxBlur;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.SVGPath;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeLineJoin;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 
@@ -47,12 +50,35 @@ public class PaintFXController implements Initializable {
     private Canvas canvas;
     private final FileChooser fileChooser = new FileChooser();
     private File savedFile;
+//    private List<Float> widths;
     @FXML
     private Group group;
     @FXML
     private Label status;
     @FXML
     private ColorPicker colorPicker;
+    @FXML
+    private ComboBox<Float> widthPicker;
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+//        widths = Arrays.asList(0.1f, 0.5f, 1.0f, 2.0f);
+        widthPicker.setItems(FXCollections.observableArrayList(0.1f, 0.5f, 1f, 2f, 5f, 10f, 20f));
+        widthPicker.selectionModelProperty().get().select(1.0f);
+        canvas = new Canvas(1024, 1024);
+        group.getChildren().add(canvas);
+        colorPicker.setValue(Color.BLACK);
+        
+//        SVGPath svg = new SVGPath();
+//        svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
+//            + "L210,90 L180,120 L170,110 L170,200 L70,200 L70,110 L60,120 L30,90"
+//            + "L70,50");
+//        svg.setStroke(Color.DARKGREY);
+//        svg.setStrokeWidth(2);
+//        svg.setEffect(new DropShadow());
+//        svg.setFill(colorPicker.getValue());
+//        group.getChildren().add(svg);
+    }    
 
     private void saveImage(Image image, File file) throws IOException {
         BufferedImage saveImage = SwingFXUtils.fromFXImage(image, null);
@@ -76,23 +102,6 @@ public class PaintFXController implements Initializable {
             logger.log(Level.SEVERE, "イメージを保存できません。: " + file, ex);
         }
     }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        canvas = new Canvas(1024, 1024);
-        group.getChildren().add(canvas);
-        colorPicker.setValue(Color.BLACK);
-        
-        SVGPath svg = new SVGPath();
-        svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
-            + "L210,90 L180,120 L170,110 L170,200 L70,200 L70,110 L60,120 L30,90"
-            + "L70,50");
-        svg.setStroke(Color.DARKGREY);
-        svg.setStrokeWidth(2);
-        svg.setEffect(new DropShadow());
-        svg.setFill(colorPicker.getValue());
-        group.getChildren().add(svg);
-    }    
 
     @FXML
     private void onPressed(MouseEvent event) {
@@ -119,13 +128,22 @@ public class PaintFXController implements Initializable {
 //        g.setFill(Color.RED);
 //        g.setStroke(Color.BLACK);
         g.setStroke(colorPicker.getValue());
-        g.setLineWidth(5);
+//        g.setLineWidth(5);
+        g.setLineWidth(widthPicker.getSelectionModel().getSelectedItem());
+        g.setLineCap(StrokeLineCap.ROUND);
+        g.setLineJoin(StrokeLineJoin.ROUND);
 //        g.lineTo(p.getX(), p.getY());
 //        g.stroke();
         g.strokeLine(o.getX(), o.getY(), p.getX(), p.getY());
         o = p;
         status.setText(String.format("(%s,%s)", p.getX(), p.getY()));
 //        group.getParent().getLocalToSceneTransform();
+    }
+
+    @FXML
+    private void onMoved(MouseEvent event) {
+        Point2D p = new Point2D(event.getX(), event.getY());
+        status.setText(String.format("(%s,%s)", p.getX(), p.getY()));
     }
 
     @FXML

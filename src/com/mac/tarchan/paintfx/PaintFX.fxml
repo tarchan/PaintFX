@@ -2,6 +2,7 @@
 
 <?import java.lang.*?>
 <?import java.util.*?>
+<?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
@@ -42,13 +43,22 @@
     </MenuBar>
     <ScrollPane prefHeight="200.0" prefWidth="200.0" style="" VBox.vgrow="ALWAYS">
       <content>
-        <Group id="Group" fx:id="group" onMouseDragged="#onDragged" onMousePressed="#onPressed" style="" />
+        <Group id="Group" fx:id="group" onMouseDragged="#onDragged" onMouseMoved="#onMoved" onMousePressed="#onPressed" style="" />
       </content>
     </ScrollPane>
     <ToolBar>
       <items>
         <Label fx:id="status" text="OK" />
-        <ColorPicker fx:id="colorPicker" editable="false" promptText="" />
+        <ComboBox fx:id="widthPicker" promptText="太さ">
+          <items>
+            <FXCollections fx:factory="observableArrayList">
+              <String fx:value="アイテム1" />
+              <String fx:value="アイテム2" />
+              <String fx:value="アイテム3" />
+            </FXCollections>
+          </items>
+        </ComboBox>
+        <ColorPicker fx:id="colorPicker" editable="false" promptText="色" />
       </items>
     </ToolBar>
   </children>
