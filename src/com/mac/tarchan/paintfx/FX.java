@@ -33,23 +33,22 @@ public class FX {
         return new FX(base);
     }
 
-    public FXMLLoader loadFXML(String name) throws IOException {
-        URL rsrc = null;
+    public FXMLLoader fxml(String name) throws IOException {
         try {
-            rsrc = base.getResource(name + ".fxml");
+            URL rsrc = base.getResource(name + ".fxml");
             FXMLLoader fxml = new FXMLLoader(rsrc);
             fxml.load();
 //            fxml.getRoot();
 //            fxml.getController();
             return fxml;
         } catch (IOException | RuntimeException ex) {
-            throw new IOException("FXMLをロードできません。: " + name, ex);
+            throw new IOException("FXMLをロードできません。: " + name + ".fxml", ex);
         }
     }
 
     public Stage dialog(String name, String title, Parent owner) {
         try {
-            FXMLLoader fxml = loadFXML(name);
+            FXMLLoader fxml = fxml(name);
             Parent root = fxml.getRoot();
             Stage stage = new Stage();
             stage.initModality(Modality.WINDOW_MODAL);

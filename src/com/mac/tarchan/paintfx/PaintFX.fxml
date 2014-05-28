@@ -60,6 +60,7 @@
           </items>
         </ComboBox>
         <ColorPicker fx:id="colorPicker" editable="false" promptText="色" />
+        <Slider id="rotate" fx:id="rotateSlider" max="360.0" />
       </items>
     </ToolBar>
   </children>

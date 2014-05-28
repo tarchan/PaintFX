@@ -27,6 +27,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
@@ -62,6 +63,8 @@ public class PaintFXController implements Initializable {
     private ComboBox<Float> widthPicker;
     @FXML
     private ScrollPane scroll;
+    @FXML
+    private Slider rotateSlider;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -72,6 +75,7 @@ public class PaintFXController implements Initializable {
         StackPane.setAlignment(canvas, Pos.CENTER);
         group.getChildren().add(canvas);
         colorPicker.setValue(Color.BLACK);
+        canvas.rotateProperty().bind(rotateSlider.valueProperty());
         
 //        SVGPath svg = new SVGPath();
 //        svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
@@ -165,9 +169,11 @@ public class PaintFXController implements Initializable {
         saveFile(null);
     }
 
+    /**
+     * アプリケーション情報ダイアログを表示します。
+     */
     @FXML
     private void onAbout(ActionEvent event) {
-        // アプリケーション情報ダイアログ
         FX.build(this.getClass()).dialog("About", "PaintFX について", group).show();
     }
 }
