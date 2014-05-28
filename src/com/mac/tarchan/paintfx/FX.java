@@ -8,16 +8,15 @@ package com.mac.tarchan.paintfx;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
- * FX
+ * JavaFX Utilities
  * 
  * @author tarchan
  */
@@ -55,12 +54,21 @@ public class FX {
             if (owner != null) {
                 stage.initOwner(owner.getScene().getWindow());
             }
+            stage.initStyle(StageStyle.UTILITY);
             stage.setScene(new Scene(root));
             stage.setTitle(title);
 //            stage.show();
             return stage;
         } catch (IOException ex) {
             throw new RuntimeException("ダイアログを表示できません。: " + name, ex);
+        }
+    }
+
+    public static void hide(Parent root) {
+        Stage stage = (Stage)root.getScene().getWindow();
+        if (stage != null) {
+            stage.hide();
+//            stage.getStyle().UTILITY;
         }
     }
 }

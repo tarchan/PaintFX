@@ -37,6 +37,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
 /**
@@ -157,6 +158,8 @@ public class PaintFXController implements Initializable {
     @FXML
     private void onNew(ActionEvent event) {
         // TODO キャンバスサイズを設定するダイアログ
+        Stage newDialog = FX.build(this.getClass()).dialog("New", "新規作成", group);
+        newDialog.show();
     }
 
     @FXML

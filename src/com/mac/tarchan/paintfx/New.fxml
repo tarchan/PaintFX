@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="150.0" minWidth="300.0" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.mac.tarchan.paintfx.NewController">
+  <children>
+    <GridPane id="GridPane" hgap="8.0" prefWidth="240.0" vgap="8.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0">
+      <children>
+        <Label text="幅" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Label text="高さ" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <Label text="解像度" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <TextField fx:id="widthBox" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <TextField fx:id="heightBox" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <TextField fx:id="dpiBox" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Label text="pixel" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+        <Label text="pixel" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <Label text="dpi" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      </children>
+      <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="112.0" minWidth="10.0" prefWidth="112.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="112.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="192.0" minWidth="10.0" prefWidth="112.0" />
+      </columnConstraints>
+      <rowConstraints>
+        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+      </rowConstraints>
+    </GridPane>
+    <FlowPane alignment="TOP_RIGHT" columnHalignment="LEFT" hgap="12.0" orientation="HORIZONTAL" prefHeight="-1.0" prefWidth="189.0" rowValignment="CENTER" vgap="12.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="15.0">
+      <children>
+        <Button minWidth="75.0" mnemonicParsing="false" onAction="#onOK" text="OK" />
+        <Button minWidth="75.0" mnemonicParsing="false" onAction="#onCancel" text="キャンセル" />
+      </children>
+      <padding>
+        <Insets />
+      </padding>
+    </FlowPane>
+  </children>
+</AnchorPane>
