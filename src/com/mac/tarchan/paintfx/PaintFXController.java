@@ -10,8 +10,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +20,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -159,6 +156,11 @@ public class PaintFXController implements Initializable {
     }
 
     @FXML
+    private void onOpen(ActionEvent event) {
+        // 保存したイメージを開く
+    }
+
+    @FXML
     private void onSave(ActionEvent event) {
         saveFile(null);
     }
@@ -166,5 +168,6 @@ public class PaintFXController implements Initializable {
     @FXML
     private void onAbout(ActionEvent event) {
         // アプリケーション情報ダイアログ
+        FX.build(this.getClass()).dialog("About", "PaintFX について", group).show();
     }
 }
