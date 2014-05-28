@@ -8,6 +8,7 @@ package com.mac.tarchan.paintfx;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 /**
  * FXML Controller class
@@ -38,11 +40,15 @@ public class NewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        widthBox.setText("1024");
-        heightBox.setText("1024");
-        dpiBox.setText("72");
-    }    
-
+        StringConverter<? extends Number> converter =  new IntegerStringConverter();
+        Bindings.bindBidirectional(widthBox.textProperty(), width, (StringConverter<Number>)converter);
+        Bindings.bindBidirectional(heightBox.textProperty(), height, (StringConverter<Number>)converter);
+        Bindings.bindBidirectional(dpiBox.textProperty(), dpi, (StringConverter<Number>)converter);
+        width.set(1024);
+        height.set(1024);
+        dpi.set(300);
+    }
+    
     public IntegerProperty widthProperty() {
         return width;
     }
@@ -62,9 +68,6 @@ public class NewController implements Initializable {
 
     @FXML
     private void onOK(ActionEvent event) {
-        width.set(Integer.valueOf(widthBox.getText()));
-        height.set(Integer.valueOf(heightBox.getText()));
-        dpi.set(Integer.valueOf(dpiBox.getText()));
         FX.hide(widthBox.getScene().getRoot());
     }
 }
