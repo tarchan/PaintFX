@@ -158,8 +158,15 @@ public class PaintFXController implements Initializable {
     @FXML
     private void onNew(ActionEvent event) {
         // TODO キャンバスサイズを設定するダイアログ
-        Stage newDialog = FX.build(this.getClass()).dialog("New", "新規作成", group);
-        newDialog.show();
+        FX fx = FX.build(this.getClass(), "New").dialog("新規作成", group);
+        NewController newController = fx.getController();
+        newController.widthProperty().set(1024);
+        newController.heightProperty().set(1024);
+        newController.dpiProperty().set(300);
+        fx.show();
+        logger.info(() -> "width: " + newController.widthProperty().get());
+        logger.info(() -> "height: " + newController.heightProperty().get());
+        logger.info(() -> "dpi: " + newController.dpiProperty().get());
     }
 
     @FXML
@@ -177,6 +184,6 @@ public class PaintFXController implements Initializable {
      */
     @FXML
     private void onAbout(ActionEvent event) {
-        FX.build(this.getClass()).dialog("About", "PaintFX について", group).show();
+        FX.build(this.getClass(), "About").dialog("PaintFX について", group).show();
     }
 }

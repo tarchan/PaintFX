@@ -23,16 +23,19 @@ import javafx.stage.StageStyle;
 public class FX {
 
     private Class base;
+    private FXMLLoader fxml;
+    private Stage stage;
 
-    private FX(Class base) {
+    private FX(Class base, String name) {
         this.base = base;
+        this.fxml = loadFXML(name);
     }
 
-    public static FX build(Class base) {
-        return new FX(base);
+    public static FX build(Class base, String name) {
+        return new FX(base, name);
     }
 
-    public FXMLLoader fxml(String name) throws IOException {
+    private FXMLLoader loadFXML(String name) {
         try {
             URL rsrc = base.getResource(name + ".fxml");
             FXMLLoader fxml = new FXMLLoader(rsrc);
@@ -41,13 +44,19 @@ public class FX {
 //            fxml.getController();
             return fxml;
         } catch (IOException | RuntimeException ex) {
-            throw new IOException("FXMLをロードできません。: " + name + ".fxml", ex);
+            throw new RuntimeException("FXMLをロードできません。: " + name + ".fxml", ex);
         }
     }
 
-    public Stage dialog(String name, String title, Parent owner) {
-        try {
-            FXMLLoader fxml = fxml(name);
+    public Parent getRoot() {
+        return fxml.getRoot();
+    }
+
+    public <T> T getController() {
+        return fxml.getController();
+    }
+
+    public FX dialog(String title, Parent owner) {
             Parent root = fxml.getRoot();
             Stage stage = new Stage();
             stage.initModality(Modality.WINDOW_MODAL);
@@ -58,10 +67,14 @@ public class FX {
             stage.setScene(new Scene(root));
             stage.setTitle(title);
 //            stage.show();
-            return stage;
-        } catch (IOException ex) {
-            throw new RuntimeException("ダイアログを表示できません。: " + name, ex);
-        }
+            this.stage = stage;
+            return this;
+    }
+
+    public FX show() {
+//        stage.show();
+        stage.showAndWait();
+        return this;
     }
 
     public static void hide(Parent root) {

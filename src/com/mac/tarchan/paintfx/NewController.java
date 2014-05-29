@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import javafx.util.converter.IntegerStringConverter;
+import javafx.util.converter.NumberStringConverter;
 
 /**
  * FXML Controller class
@@ -40,13 +41,10 @@ public class NewController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        StringConverter<? extends Number> converter =  new IntegerStringConverter();
-        Bindings.bindBidirectional(widthBox.textProperty(), width, (StringConverter<Number>)converter);
-        Bindings.bindBidirectional(heightBox.textProperty(), height, (StringConverter<Number>)converter);
-        Bindings.bindBidirectional(dpiBox.textProperty(), dpi, (StringConverter<Number>)converter);
-        width.set(1024);
-        height.set(1024);
-        dpi.set(300);
+        StringConverter<Number> converter =  new NumberStringConverter("#0");
+        Bindings.bindBidirectional(widthBox.textProperty(), width, converter);
+        Bindings.bindBidirectional(heightBox.textProperty(), height, converter);
+        Bindings.bindBidirectional(dpiBox.textProperty(), dpi, converter);
     }
     
     public IntegerProperty widthProperty() {
