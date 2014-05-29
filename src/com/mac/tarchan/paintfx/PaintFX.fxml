@@ -18,14 +18,18 @@
           <items>
             <MenuItem mnemonicParsing="false" onAction="#onNew" style="" text="新規">
               <accelerator>
-                <KeyCodeCombination alt="UP" code="N" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
+                <KeyCodeCombination alt="UP" code="N" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
             </MenuItem>
-            <MenuItem mnemonicParsing="false" onAction="#onOpen" text="開く" />
+            <MenuItem mnemonicParsing="false" onAction="#onOpen" text="開く">
+              <accelerator>
+                <KeyCodeCombination alt="UP" code="O" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+              </accelerator>
+            </MenuItem>
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#onSave" text="保存">
               <accelerator>
-                <KeyCodeCombination alt="UP" code="S" control="UP" meta="DOWN" shift="UP" shortcut="UP" />
+                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
               </accelerator>
             </MenuItem>
           </items>
