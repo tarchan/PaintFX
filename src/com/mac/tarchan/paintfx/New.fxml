@@ -34,8 +34,8 @@
     </GridPane>
     <FlowPane alignment="TOP_RIGHT" columnHalignment="LEFT" hgap="12.0" orientation="HORIZONTAL" prefHeight="-1.0" prefWidth="189.0" rowValignment="CENTER" vgap="12.0" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="15.0">
       <children>
-        <Button minWidth="75.0" mnemonicParsing="false" onAction="#onOK" text="OK" />
-        <Button minWidth="75.0" mnemonicParsing="false" onAction="#onCancel" text="キャンセル" />
+        <Button defaultButton="true" minWidth="75.0" mnemonicParsing="false" onAction="#onOK" text="OK" underline="false" />
+        <Button cancelButton="true" minWidth="75.0" mnemonicParsing="false" onAction="#onCancel" text="キャンセル" />
       </children>
       <padding>
         <Insets />

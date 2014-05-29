@@ -22,13 +22,13 @@ import javafx.stage.StageStyle;
  */
 public class FX {
 
-    private Class base;
-    private FXMLLoader fxml;
-    private Stage stage;
+    private Class _base;
+    private FXMLLoader _fxml;
+    private Stage _stage;
 
     private FX(Class base, String name) {
-        this.base = base;
-        this.fxml = loadFXML(name);
+        this._base = base;
+        this._fxml = loadFXML(name);
     }
 
     public static FX build(Class base, String name) {
@@ -37,7 +37,7 @@ public class FX {
 
     private FXMLLoader loadFXML(String name) {
         try {
-            URL rsrc = base.getResource(name + ".fxml");
+            URL rsrc = _base.getResource(name + ".fxml");
             FXMLLoader fxml = new FXMLLoader(rsrc);
             fxml.load();
 //            fxml.getRoot();
@@ -48,16 +48,16 @@ public class FX {
         }
     }
 
-    public Parent getRoot() {
-        return fxml.getRoot();
+    public <V> V getRoot() {
+        return _fxml.getRoot();
     }
 
-    public <T> T getController() {
-        return fxml.getController();
+    public <C> C getController() {
+        return _fxml.getController();
     }
 
     public FX dialog(String title, Parent owner) {
-            Parent root = fxml.getRoot();
+            Parent root = _fxml.getRoot();
             Stage stage = new Stage();
             stage.initModality(Modality.WINDOW_MODAL);
             if (owner != null) {
@@ -67,13 +67,17 @@ public class FX {
             stage.setScene(new Scene(root));
             stage.setTitle(title);
 //            stage.show();
-            this.stage = stage;
+            _stage = stage;
             return this;
     }
 
     public FX show() {
-//        stage.show();
-        stage.showAndWait();
+        _stage.show();
+        return this;
+    }
+
+    public FX showDialog() {
+        _stage.showAndWait();
         return this;
     }
 
@@ -81,7 +85,6 @@ public class FX {
         Stage stage = (Stage)root.getScene().getWindow();
         if (stage != null) {
             stage.hide();
-//            stage.getStyle().UTILITY;
         }
     }
 }

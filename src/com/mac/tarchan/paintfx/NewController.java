@@ -16,7 +16,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
-import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.NumberStringConverter;
 
 /**
@@ -61,6 +60,9 @@ public class NewController implements Initializable {
 
     @FXML
     private void onCancel(ActionEvent event) {
+        width.set(0);
+        height.set(0);
+        dpi.set(0);
         FX.hide(widthBox.getScene().getRoot());
     }
 

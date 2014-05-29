@@ -163,7 +163,7 @@ public class PaintFXController implements Initializable {
         newController.widthProperty().set(1024);
         newController.heightProperty().set(1024);
         newController.dpiProperty().set(300);
-        fx.show();
+        fx.showDialog();
         logger.info(() -> "width: " + newController.widthProperty().get());
         logger.info(() -> "height: " + newController.heightProperty().get());
         logger.info(() -> "dpi: " + newController.dpiProperty().get());
@@ -184,6 +184,6 @@ public class PaintFXController implements Initializable {
      */
     @FXML
     private void onAbout(ActionEvent event) {
-        FX.build(this.getClass(), "About").dialog("PaintFX について", group).show();
+        FX.build(this.getClass(), "About").dialog("PaintFX について", group).showDialog();
     }
 }
