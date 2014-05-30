@@ -180,6 +180,17 @@ public class PaintFXController implements Initializable {
     @FXML
     private void onOpen(ActionEvent event) {
         // 保存したイメージを開く
+        File file = fileChooser.showOpenDialog(group.getScene().getWindow());
+        if (file != null) {
+            fileChooser.setInitialDirectory(file.getParentFile());
+            fileChooser.setInitialFileName(file.getName());
+            Image image = new Image(file.toURI().toString());
+            logger.info(() -> "dir=" + file.getParentFile() + ", name=" + file.getName() + ", image=" + image);
+            canvas.setWidth(image.getWidth());
+            canvas.setHeight(image.getHeight());
+            GraphicsContext g = canvas.getGraphicsContext2D();
+            g.drawImage(image, 0, 0);
+        }
     }
 
     @FXML
