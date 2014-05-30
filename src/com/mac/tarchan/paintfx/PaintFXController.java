@@ -31,13 +31,13 @@ import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javax.imageio.ImageIO;
 
 /**
@@ -77,7 +77,15 @@ public class PaintFXController implements Initializable {
         group.getChildren().add(canvas);
         colorPicker.setValue(Color.BLACK);
         canvas.rotateProperty().bind(rotateSlider.valueProperty());
-        
+//        canvas.setStyle("-fx-background-color:white;");
+        GraphicsContext g = canvas.getGraphicsContext2D();
+        g.setFill(Color.WHITE);
+        g.fillRect(0, 0, 1024, 1024);
+//        group.setStyle("-fx-background-color:white;");
+        scroll.setStyle("-fx-background-color:transparent; -fx-background:gray;");
+//        scroll.setStyle("-fx-background: gray;");
+//        scroll.setStyle("-fx-control-inner-background: gray;");
+
 //        SVGPath svg = new SVGPath();
 //        svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
 //            + "L210,90 L180,120 L170,110 L170,200 L70,200 L70,110 L60,120 L30,90"
