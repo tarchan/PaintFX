@@ -50,7 +50,7 @@ public class PaintFXController implements Initializable {
     private static final Logger logger = Logger.getLogger(PaintFXController.class.getName());
     /** 開始点 */
     private Point2D o;
-    private Canvas canvas;
+    private Canvas canvas = new Canvas();
     private final FileChooser fileChooser = new FileChooser();
     private File savedFile;
 //    private List<Float> widths;
@@ -72,19 +72,20 @@ public class PaintFXController implements Initializable {
 //        widths = Arrays.asList(0.1f, 0.5f, 1.0f, 2.0f);
         widthPicker.setItems(FXCollections.observableArrayList(0.1f, 0.5f, 1f, 2f, 5f, 10f, 20f));
         widthPicker.selectionModelProperty().get().select(1.0f);
-        canvas = new Canvas(1024, 1024);
+//        canvas = new Canvas(1024, 1024);
         StackPane.setAlignment(canvas, Pos.CENTER);
         group.getChildren().add(canvas);
         colorPicker.setValue(Color.BLACK);
         canvas.rotateProperty().bind(rotateSlider.valueProperty());
 //        canvas.setStyle("-fx-background-color:white;");
-        GraphicsContext g = canvas.getGraphicsContext2D();
-        g.setFill(Color.WHITE);
-        g.fillRect(0, 0, 1024, 1024);
+//        GraphicsContext g = canvas.getGraphicsContext2D();
+//        g.setFill(Color.WHITE);
+//        g.fillRect(0, 0, 1024, 1024);
 //        group.setStyle("-fx-background-color:white;");
         scroll.setStyle("-fx-background-color:transparent; -fx-background:gray;");
 //        scroll.setStyle("-fx-background: gray;");
 //        scroll.setStyle("-fx-control-inner-background: gray;");
+        newImage(1024, 1024);
 
 //        SVGPath svg = new SVGPath();
 //        svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
@@ -96,6 +97,21 @@ public class PaintFXController implements Initializable {
 //        svg.setFill(colorPicker.getValue());
 //        group.getChildren().add(svg);
     }    
+
+    private void newImage(int width, int height) {
+        canvas.setWidth(width);
+        canvas.setHeight(height);
+        GraphicsContext g = canvas.getGraphicsContext2D();
+        g.setFill(Color.WHITE);
+        g.fillRect(0, 0, width, height);
+    }
+
+    private void newImage(Image image) {
+        canvas.setWidth(image.getWidth());
+        canvas.setHeight(image.getHeight());
+        GraphicsContext g = canvas.getGraphicsContext2D();
+        g.drawImage(image, 0, 0);
+    }
 
     private void saveImage(Image image, File file) throws IOException {
         BufferedImage saveImage = SwingFXUtils.fromFXImage(image, null);
@@ -168,13 +184,14 @@ public class PaintFXController implements Initializable {
         // TODO キャンバスサイズを設定するダイアログ
         FX fx = FX.build(this.getClass(), "New").dialog("新規作成", group);
         NewController newController = fx.getController();
-        newController.widthProperty().set(1024);
-        newController.heightProperty().set(1024);
+        newController.widthProperty().set((int)canvas.getWidth());
+        newController.heightProperty().set((int)canvas.getHeight());
         newController.dpiProperty().set(300);
         fx.showDialog();
         logger.info(() -> "width: " + newController.widthProperty().get());
         logger.info(() -> "height: " + newController.heightProperty().get());
         logger.info(() -> "dpi: " + newController.dpiProperty().get());
+        newImage(newController.widthProperty().get(), newController.heightProperty().get());
     }
 
     @FXML
@@ -186,10 +203,11 @@ public class PaintFXController implements Initializable {
             fileChooser.setInitialFileName(file.getName());
             Image image = new Image(file.toURI().toString());
             logger.info(() -> "dir=" + file.getParentFile() + ", name=" + file.getName() + ", image=" + image);
-            canvas.setWidth(image.getWidth());
-            canvas.setHeight(image.getHeight());
-            GraphicsContext g = canvas.getGraphicsContext2D();
-            g.drawImage(image, 0, 0);
+//            canvas.setWidth(image.getWidth());
+//            canvas.setHeight(image.getHeight());
+//            GraphicsContext g = canvas.getGraphicsContext2D();
+//            g.drawImage(image, 0, 0);
+            newImage(image);
         }
     }
 

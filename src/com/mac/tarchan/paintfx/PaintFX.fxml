@@ -53,7 +53,6 @@
     </ScrollPane>
     <ToolBar>
       <items>
-        <Label fx:id="status" text="OK" />
         <ComboBox fx:id="widthPicker" promptText="太さ">
           <items>
             <FXCollections fx:factory="observableArrayList">
@@ -65,6 +64,7 @@
         </ComboBox>
         <ColorPicker fx:id="colorPicker" editable="false" promptText="色" />
         <Slider id="rotate" fx:id="rotateSlider" max="360.0" />
+        <Label fx:id="status" text="OK" />
       </items>
     </ToolBar>
   </children>
