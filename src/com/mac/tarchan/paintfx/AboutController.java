@@ -8,7 +8,10 @@ package com.mac.tarchan.paintfx;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 
 /**
  * FXML Controller class
@@ -16,12 +19,18 @@ import javafx.fxml.Initializable;
  * @author v-togura
  */
 public class AboutController implements Initializable {
+    @FXML
+    private Button close;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    }
+
+    @FXML
+    private void onClose(ActionEvent event) {
+        FX.hide(close.getScene().getRoot());
     }
 }

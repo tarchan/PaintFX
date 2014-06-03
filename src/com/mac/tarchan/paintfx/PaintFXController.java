@@ -26,21 +26,18 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.stage.FileChooser;
-import javafx.util.Callback;
 import javax.imageio.ImageIO;
 
 /**
@@ -53,10 +50,12 @@ public class PaintFXController implements Initializable {
     private static final Logger logger = Logger.getLogger(PaintFXController.class.getName());
     /** 開始点 */
     private Point2D o;
-    private Canvas canvas = new Canvas();
+    private final Canvas canvas = new Canvas();
     private final FileChooser fileChooser = new FileChooser();
     private File savedFile;
 //    private List<Float> widths;
+    @FXML
+    private ScrollPane scroll;
     @FXML
     private Pane group;
     @FXML
@@ -65,8 +64,6 @@ public class PaintFXController implements Initializable {
     private ColorPicker colorPicker;
     @FXML
     private ComboBox<Float> widthPicker;
-    @FXML
-    private ScrollPane scroll;
     @FXML
     private Slider rotateSlider;
 
