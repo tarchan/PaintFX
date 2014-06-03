@@ -193,10 +193,15 @@ public class PaintFXController implements Initializable {
         newController.heightProperty().set((int)canvas.getHeight());
         newController.dpiProperty().set(300);
         fx.showDialog();
-        logger.info(() -> "width: " + newController.widthProperty().get());
-        logger.info(() -> "height: " + newController.heightProperty().get());
+        int width = newController.widthProperty().get();
+        int height = newController.heightProperty().get();
+        if (width <= 0 || height <= 0) {
+            return;
+        }
+        logger.info(() -> "width: " + width);
+        logger.info(() -> "height: " + height);
         logger.info(() -> "dpi: " + newController.dpiProperty().get());
-        newImage(newController.widthProperty().get(), newController.heightProperty().get());
+        newImage(width, height);
     }
 
     @FXML
