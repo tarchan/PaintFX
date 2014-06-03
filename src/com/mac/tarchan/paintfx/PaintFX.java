@@ -10,7 +10,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * PaintFX
@@ -30,9 +32,15 @@ public class PaintFX extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("PaintFX.fxml"));
         
         Scene scene = new Scene(root);
-        
+//        Scene scene = new Scene(root, Color.DARKGRAY);
+//        scene.setFill(null);
+//        Scene scene = new Scene(root, Color.TRANSPARENT);
+//        root.setStyle("-fx-background-color: transparent;");
+
+//        stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
         stage.setTitle("PaintFX");
+//        stage.setOpacity(0.5);
         stage.show();
     }
 

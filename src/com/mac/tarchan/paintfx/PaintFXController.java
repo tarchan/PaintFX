@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -38,6 +39,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import javax.imageio.ImageIO;
 
 /**
@@ -84,9 +86,15 @@ public class PaintFXController implements Initializable {
 //        g.setFill(Color.WHITE);
 //        g.fillRect(0, 0, 1024, 1024);
 //        group.setStyle("-fx-background-color:white;");
-        scroll.setStyle("-fx-background-color:transparent; -fx-background:gray;");
+        scroll.setStyle("-fx-background-color:transparent; -fx-background:darkgray;");
+//        scroll.setOpacity(0.5);
+//        Parent root = scroll.getScene().getRoot();
+//        root.setStyle("-fx-background-color:transparent; -fx-background:transparent;");
+//        root.setOpacity(0.5);
 //        scroll.setStyle("-fx-background: gray;");
 //        scroll.setStyle("-fx-control-inner-background: gray;");
+//        Window window = scroll.getScene().getWindow();
+//        window.setOpacity(0.5);
         newImage(1024, 1024);
 
 //        SVGPath svg = new SVGPath();
