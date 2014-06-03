@@ -26,6 +26,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
@@ -38,6 +40,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
 import javax.imageio.ImageIO;
 
 /**
@@ -72,6 +75,8 @@ public class PaintFXController implements Initializable {
 //        widths = Arrays.asList(0.1f, 0.5f, 1.0f, 2.0f);
         widthPicker.setItems(FXCollections.observableArrayList(0.1f, 0.5f, 1f, 2f, 5f, 10f, 20f));
         widthPicker.selectionModelProperty().get().select(1.0f);
+        widthPicker.setCellFactory((ListView<Float> param) -> new LineWidthCell());
+        widthPicker.setButtonCell(new LineWidthCell());
 //        canvas = new Canvas(1024, 1024);
         StackPane.setAlignment(canvas, Pos.CENTER);
         group.getChildren().add(canvas);
