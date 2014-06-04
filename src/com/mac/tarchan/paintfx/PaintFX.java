@@ -31,11 +31,11 @@ public class PaintFX extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("PaintFX.fxml"));
         
-        Scene scene = new Scene(root);
-//        Scene scene = new Scene(root, Color.DARKGRAY);
+//        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, Color.web("transparent", 0.5));
 //        scene.setFill(null);
 //        Scene scene = new Scene(root, Color.TRANSPARENT);
-//        root.setStyle("-fx-background-color: transparent;");
+        root.setStyle("-fx-background-color: transparent;");
 
 //        stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);

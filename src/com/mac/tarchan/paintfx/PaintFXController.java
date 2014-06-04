@@ -86,7 +86,7 @@ public class PaintFXController implements Initializable {
 //        g.setFill(Color.WHITE);
 //        g.fillRect(0, 0, 1024, 1024);
 //        group.setStyle("-fx-background-color:white;");
-        scroll.setStyle("-fx-background-color:transparent; -fx-background:darkgray;");
+        scroll.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
 //        scroll.setOpacity(0.5);
 //        Parent root = scroll.getScene().getRoot();
 //        root.setStyle("-fx-background-color:transparent; -fx-background:transparent;");
@@ -95,7 +95,7 @@ public class PaintFXController implements Initializable {
 //        scroll.setStyle("-fx-control-inner-background: gray;");
 //        Window window = scroll.getScene().getWindow();
 //        window.setOpacity(0.5);
-        newImage(1024, 1024);
+        newImage(512, 512);
 
 //        SVGPath svg = new SVGPath();
 //        svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
