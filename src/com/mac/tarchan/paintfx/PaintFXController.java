@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -20,14 +21,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
@@ -39,7 +38,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.stage.FileChooser;
-import javafx.stage.Window;
 import javax.imageio.ImageIO;
 
 /**
@@ -74,13 +72,14 @@ public class PaintFXController implements Initializable {
 //        widths = Arrays.asList(0.1f, 0.5f, 1.0f, 2.0f);
         widthPicker.setItems(FXCollections.observableArrayList(0.1f, 0.5f, 1f, 2f, 5f, 10f, 20f));
         widthPicker.selectionModelProperty().get().select(1.0f);
-        widthPicker.setCellFactory((ListView<Float> param) -> new LineWidthCell());
+//        widthPicker.setCellFactory((ListView<Float> param) -> new LineWidthCell());
         widthPicker.setButtonCell(new LineWidthCell());
 //        canvas = new Canvas(1024, 1024);
         StackPane.setAlignment(canvas, Pos.CENTER);
         group.getChildren().add(canvas);
         colorPicker.setValue(Color.BLACK);
         canvas.rotateProperty().bind(rotateSlider.valueProperty());
+        rotateSlider.valueProperty().addListener(this::onRotate);
 //        canvas.setStyle("-fx-background-color:white;");
 //        GraphicsContext g = canvas.getGraphicsContext2D();
 //        g.setFill(Color.WHITE);
@@ -107,6 +106,10 @@ public class PaintFXController implements Initializable {
 //        svg.setFill(colorPicker.getValue());
 //        group.getChildren().add(svg);
     }    
+
+    private void onRotate(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+        logger.log(Level.CONFIG, () -> "回転: " + newValue);
+    }
 
     private void newImage(int width, int height) {
         canvas.setWidth(width);
@@ -148,7 +151,8 @@ public class PaintFXController implements Initializable {
 
     @FXML
     private void onPressed(MouseEvent event) {
-        o = new Point2D(event.getX(), event.getY());
+//        o = new Point2D(event.getX(), event.getY());
+        o = canvas.sceneToLocal(event.getSceneX(), event.getSceneY());
 //        GraphicsContext g = canvas.getGraphicsContext2D();
 //        g.moveTo(o.getX(), o.getY());
     }
@@ -165,8 +169,8 @@ public class PaintFXController implements Initializable {
 //        g.setEffect(blur);
 //        Point2D p = group.getLocalToParentTransform().transform(event.getSceneX(), event.getSceneY());
 //        Point2D p2 = group.getLocalToSceneTransform().transform(event.getSceneX(), event.getSceneY());
-//        Point2D p = canvas.sceneToLocal(event.getSceneX(), event.getSceneY());
-        Point2D p = new Point2D(event.getX(), event.getY());
+        Point2D p = canvas.sceneToLocal(event.getSceneX(), event.getSceneY());
+//        Point2D p = new Point2D(event.getX(), event.getY());
 //        g.fillRect(p.getX(), p.getY(), 1, 1);
 //        g.setFill(Color.RED);
 //        g.setStroke(Color.BLACK);
@@ -179,14 +183,14 @@ public class PaintFXController implements Initializable {
 //        g.stroke();
         g.strokeLine(o.getX(), o.getY(), p.getX(), p.getY());
         o = p;
-        status.setText(String.format("(%s,%s)", p.getX(), p.getY()));
+        status.setText(String.format("(%.2f,%.2f)", p.getX(), p.getY()));
 //        group.getParent().getLocalToSceneTransform();
     }
 
     @FXML
     private void onMoved(MouseEvent event) {
-        Point2D p = new Point2D(event.getX(), event.getY());
-        status.setText(String.format("(%s,%s)", p.getX(), p.getY()));
+        Point2D p = canvas.sceneToLocal(event.getSceneX(), event.getSceneY());
+        status.setText(String.format("(%.2f,%.2f)", p.getX(), p.getY()));
     }
 
     @FXML
