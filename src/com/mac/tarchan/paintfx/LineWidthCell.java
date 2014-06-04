@@ -16,6 +16,8 @@ import javafx.scene.shape.Line;
  */
 public class LineWidthCell extends ListCell<Float> {
 
+    private Line line = new Line();
+
     @Override
     protected void updateItem(Float item, boolean empty) {
         super.updateItem(item, empty);
@@ -24,7 +26,8 @@ public class LineWidthCell extends ListCell<Float> {
             return;
         }
 
-        Line line = new Line(0, 0, 50 - item, 0);
+//        Line line = new Line(0, 0, 50 - item, 0);
+        line.setEndX(50 - item);
         line.setStrokeWidth(item);
         setText(item + " px");
         setGraphic(line);
