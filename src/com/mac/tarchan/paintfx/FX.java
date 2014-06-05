@@ -71,9 +71,9 @@ public class FX {
             return this;
     }
 
-    public <U> U show() {
+    public FX show() {
         _stage.show();
-        return getUserData(_stage.getScene().getRoot());
+        return this;
     }
 
     public <U> U showDialog() {
