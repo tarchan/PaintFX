@@ -218,13 +218,13 @@ public class PaintFXController implements Initializable {
         newController.heightProperty().set((int)canvas.getHeight());
         newController.dpiProperty().set(300);
 //        fx.showDialog();
-        Dimension2D dim = fx.showDialog();
-        logger.info(() -> "dim: " + dim);
-        if (dim == null) {
+        Dimension2D size = fx.showDialog();
+        logger.info(() -> "size: " + size);
+        if (size == null) {
             return;
         }
-        int width = (int)dim.getWidth();
-        int height = (int)dim.getHeight();
+        int width = (int)size.getWidth();
+        int height = (int)size.getHeight();
 //        int width = newController.widthProperty().get();
 //        int height = newController.heightProperty().get();
 //        if (width <= 0 || height <= 0) {
