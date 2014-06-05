@@ -13,6 +13,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
@@ -53,6 +55,7 @@ public class PaintFXController implements Initializable {
     private final Canvas canvas = new Canvas();
     private final FileChooser fileChooser = new FileChooser();
     private File savedFile;
+    private Preferences init = Preferences.userRoot().node(getClass().getName());
 //    private List<Float> widths;
     @FXML
     private ScrollPane scroll;
@@ -69,6 +72,14 @@ public class PaintFXController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+//        logger.info(() -> "init: " + init);
+        int width = init.getInt("width", 512);
+        int height = init.getInt("height", 512);
+        String file = init.get("file", null);
+        if (file != null) {
+            savedFile = new File(file);
+            logger.info(() -> "file: " + file);
+        }
 //        widths = Arrays.asList(0.1f, 0.5f, 1.0f, 2.0f);
         widthPicker.setItems(FXCollections.observableArrayList(0.1f, 0.5f, 1f, 2f, 5f, 10f, 20f));
         widthPicker.selectionModelProperty().get().select(1.0f);
@@ -94,7 +105,7 @@ public class PaintFXController implements Initializable {
 //        scroll.setStyle("-fx-control-inner-background: gray;");
 //        Window window = scroll.getScene().getWindow();
 //        window.setOpacity(0.5);
-        newImage(512, 512);
+        newImage(width, height);
 
 //        SVGPath svg = new SVGPath();
 //        svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
@@ -144,6 +155,8 @@ public class PaintFXController implements Initializable {
             WritableImage image = canvas.snapshot(params, null);
             saveImage(image, file);
             savedFile = file;
+            init.put("file", file.getPath());
+            logger.info(() -> "file: " + savedFile);
         } catch (IOException ex) {
             logger.log(Level.SEVERE, "イメージを保存できません。: " + file, ex);
         }
@@ -210,12 +223,18 @@ public class PaintFXController implements Initializable {
         logger.info(() -> "width: " + width);
         logger.info(() -> "height: " + height);
         logger.info(() -> "dpi: " + newController.dpiProperty().get());
+        init.putInt("width", width);
+        init.putInt("height", height);
         newImage(width, height);
     }
 
     @FXML
     private void onOpen(ActionEvent event) {
         // 保存したイメージを開く
+        if (savedFile != null) {
+            fileChooser.setInitialDirectory(savedFile.getParentFile());
+            fileChooser.setInitialFileName(savedFile.getName());
+        }
         File file = fileChooser.showOpenDialog(group.getScene().getWindow());
         if (file != null) {
             fileChooser.setInitialDirectory(file.getParentFile());
@@ -227,6 +246,7 @@ public class PaintFXController implements Initializable {
 //            GraphicsContext g = canvas.getGraphicsContext2D();
 //            g.drawImage(image, 0, 0);
             newImage(image);
+            init.put("file", file.getPath());
         }
     }
 
