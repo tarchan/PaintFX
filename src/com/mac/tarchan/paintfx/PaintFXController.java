@@ -35,6 +35,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -119,6 +120,8 @@ public class PaintFXController implements Initializable {
 //        svg.setEffect(new DropShadow());
 //        svg.setFill(colorPicker.getValue());
 //        group.getChildren().add(svg);
+        KeyCombination accelerator = KeyCombination.valueOf("ctrl+n");
+        logger.info(() -> "accelerator: " + accelerator);
     }    
 
     private void onRotate(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
