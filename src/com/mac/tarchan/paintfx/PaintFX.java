@@ -9,10 +9,10 @@ package com.mac.tarchan.paintfx;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
  * PaintFX
@@ -36,6 +36,8 @@ public class PaintFX extends Application {
 //        scene.setFill(null);
 //        Scene scene = new Scene(root, Color.TRANSPARENT);
         root.setStyle("-fx-background-color: transparent;");
+//        PerspectiveCamera camera = new PerspectiveCamera();
+//        scene.setCamera(camera);
 
 //        stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);

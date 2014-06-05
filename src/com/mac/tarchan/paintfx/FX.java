@@ -22,8 +22,8 @@ import javafx.stage.StageStyle;
  */
 public class FX {
 
-    private Class _base;
-    private FXMLLoader _fxml;
+    private final Class _base;
+    private final FXMLLoader _fxml;
     private Stage _stage;
 
     private FX(Class base, String name) {
@@ -71,14 +71,14 @@ public class FX {
             return this;
     }
 
-    public FX show() {
+    public <U> U show() {
         _stage.show();
-        return this;
+        return getUserData(_stage.getScene().getRoot());
     }
 
-    public FX showDialog() {
+    public <U> U showDialog() {
         _stage.showAndWait();
-        return this;
+        return getUserData(_stage.getScene().getRoot());
     }
 
     public static void hide(Parent root) {
@@ -86,5 +86,13 @@ public class FX {
         if (stage != null) {
             stage.hide();
         }
+    }
+
+    public static void setUserData(Parent root, Object value) {
+        root.setUserData(value);
+    }
+
+    public static <U> U getUserData(Parent root) {
+        return (U)root.getUserData();
     }
 }

@@ -21,7 +21,9 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
+import javafx.geometry.Point3D;
 import javafx.geometry.Pos;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
@@ -90,6 +92,7 @@ public class PaintFXController implements Initializable {
         group.getChildren().add(canvas);
         colorPicker.setValue(Color.BLACK);
         canvas.rotateProperty().bind(rotateSlider.valueProperty());
+//        canvas.setRotationAxis(new Point3D(0, 1, 0));
         rotateSlider.valueProperty().addListener(this::onRotate);
 //        canvas.setStyle("-fx-background-color:white;");
 //        GraphicsContext g = canvas.getGraphicsContext2D();
@@ -214,15 +217,22 @@ public class PaintFXController implements Initializable {
         newController.widthProperty().set((int)canvas.getWidth());
         newController.heightProperty().set((int)canvas.getHeight());
         newController.dpiProperty().set(300);
-        fx.showDialog();
-        int width = newController.widthProperty().get();
-        int height = newController.heightProperty().get();
-        if (width <= 0 || height <= 0) {
+//        fx.showDialog();
+        Dimension2D dim = fx.showDialog();
+        logger.info(() -> "dim: " + dim);
+        if (dim == null) {
             return;
         }
-        logger.info(() -> "width: " + width);
-        logger.info(() -> "height: " + height);
-        logger.info(() -> "dpi: " + newController.dpiProperty().get());
+        int width = (int)dim.getWidth();
+        int height = (int)dim.getHeight();
+//        int width = newController.widthProperty().get();
+//        int height = newController.heightProperty().get();
+//        if (width <= 0 || height <= 0) {
+//            return;
+//        }
+//        logger.info(() -> "width: " + width);
+//        logger.info(() -> "height: " + height);
+//        logger.info(() -> "dpi: " + newController.dpiProperty().get());
         init.putInt("width", width);
         init.putInt("height", height);
         newImage(width, height);

@@ -14,6 +14,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Dimension2D;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
@@ -68,6 +69,7 @@ public class NewController implements Initializable {
 
     @FXML
     private void onOK(ActionEvent event) {
+        FX.setUserData(widthBox.getScene().getRoot(), new Dimension2D(width.get(), height.get()));
         FX.hide(widthBox.getScene().getRoot());
     }
 }
