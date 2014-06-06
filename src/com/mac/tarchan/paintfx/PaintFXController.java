@@ -10,13 +10,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Worker;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,8 +43,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeLineJoin;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javax.imageio.ImageIO;
 
@@ -260,6 +266,36 @@ public class PaintFXController implements Initializable {
         File file = fileChooser.showOpenDialog(group.getScene().getWindow());
         if (file != null) {
             initFileChooser(file);
+            if (file.getName().endsWith(".svg")) {
+//                SVGPath svg = new SVGPath();
+//                try {
+//                    String content = new String(Files.readAllBytes(file.toPath()), "utf-8");
+//                    svg.setContent(content);
+//                    logger.log(Level.INFO, "SVG: " + svg.getId());
+//                } catch (IOException ex) {
+//                    logger.log(Level.SEVERE, "SVGを読み込めません。", ex);
+//                    throw new RuntimeException("SVGを読み込めません。", ex);
+//                }
+//                GraphicsContext g = canvas.getGraphicsContext2D();
+//                g.appendSVGPath(svg.getContent());
+                // TODO SVGのイメージをキャンバスにコピー
+                WebView web = new WebView();
+                WebEngine engine = web.getEngine();
+                engine.getLoadWorker().stateProperty().addListener((ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) -> {
+                    logger.info(() -> "state=" + newValue);
+                    if (newValue == Worker.State.SUCCEEDED) {
+                        Image image = web.snapshot(null, null);
+//                        group.getChildren().remove(web);
+                        newImage(image);
+                        init.put("file", file.getPath());
+                    }
+                });
+                group.getChildren().add(web);
+                engine.load(file.toURI().toString());
+//                Image image = web.snapshot(null, null);
+//                group.getChildren().remove(web);
+                return;
+            }
 //            fileChooser.setInitialDirectory(file.getParentFile());
 //            fileChooser.setInitialFileName(file.getName());
             Image image = new Image(file.toURI().toString());
