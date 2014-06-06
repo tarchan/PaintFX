@@ -24,6 +24,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.geometry.Point3D;
@@ -108,6 +109,11 @@ public class PaintFXController implements Initializable {
 //        g.fillRect(0, 0, 1024, 1024);
 //        group.setStyle("-fx-background-color:white;");
         scroll.setStyle("-fx-background-color: transparent; -fx-background: transparent;");
+        scroll.viewportBoundsProperty().addListener((ObservableValue<? extends Bounds> observable, Bounds oldValue, Bounds newValue) -> {
+            double prefWidth = Math.max(canvas.getWidth(), newValue.getWidth());
+            double prefHeight = Math.max(canvas.getHeight(), newValue.getHeight());
+            group.setPrefSize(prefWidth, prefHeight);
+        });
 //        scroll.setOpacity(0.5);
 //        Parent root = scroll.getScene().getRoot();
 //        root.setStyle("-fx-background-color:transparent; -fx-background:transparent;");
