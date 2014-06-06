@@ -51,14 +51,16 @@ import javax.imageio.ImageIO;
  * @author tarchan
  */
 public class PaintFXController implements Initializable {
-    
+
+    /** ログ */
     private static final Logger logger = Logger.getLogger(PaintFXController.class.getName());
+    /** 環境設定 */
+    private final Preferences init = Preferences.userRoot().node(getClass().getName());
     /** 開始点 */
     private Point2D o;
     private final Canvas canvas = new Canvas();
     private final FileChooser fileChooser = new FileChooser();
     private File savedFile;
-    private Preferences init = Preferences.userRoot().node(getClass().getName());
 //    private List<Float> widths;
     @FXML
     private ScrollPane scroll;
@@ -80,8 +82,7 @@ public class PaintFXController implements Initializable {
         int height = init.getInt("height", 512);
         String file = init.get("file", null);
         if (file != null) {
-            savedFile = new File(file);
-            logger.info(() -> "file: " + file);
+            initFileChooser(new File(file));
         }
 //        widths = Arrays.asList(0.1f, 0.5f, 1.0f, 2.0f);
         widthPicker.setItems(FXCollections.observableArrayList(0.1f, 0.5f, 1f, 2f, 5f, 10f, 20f));
@@ -162,6 +163,7 @@ public class PaintFXController implements Initializable {
             saveImage(image, file);
             savedFile = file;
             init.put("file", file.getPath());
+            initFileChooser(file);
             logger.info(() -> "file: " + savedFile);
         } catch (IOException ex) {
             logger.log(Level.SEVERE, "イメージを保存できません。: " + file, ex);
@@ -241,17 +243,25 @@ public class PaintFXController implements Initializable {
         newImage(width, height);
     }
 
-    @FXML
-    private void onOpen(ActionEvent event) {
-        // 保存したイメージを開く
-        if (savedFile != null) {
-            fileChooser.setInitialDirectory(savedFile.getParentFile());
-            fileChooser.setInitialFileName(savedFile.getName());
-        }
-        File file = fileChooser.showOpenDialog(group.getScene().getWindow());
+    private void initFileChooser(File file) {
         if (file != null) {
             fileChooser.setInitialDirectory(file.getParentFile());
             fileChooser.setInitialFileName(file.getName());
+        }        
+    }
+
+    @FXML
+    private void onOpen(ActionEvent event) {
+        // 保存したイメージを開く
+//        if (savedFile != null) {
+//            fileChooser.setInitialDirectory(savedFile.getParentFile());
+//            fileChooser.setInitialFileName(savedFile.getName());
+//        }
+        File file = fileChooser.showOpenDialog(group.getScene().getWindow());
+        if (file != null) {
+            initFileChooser(file);
+//            fileChooser.setInitialDirectory(file.getParentFile());
+//            fileChooser.setInitialFileName(file.getName());
             Image image = new Image(file.toURI().toString());
             logger.info(() -> "dir=" + file.getParentFile() + ", name=" + file.getName() + ", image=" + image);
 //            canvas.setWidth(image.getWidth());
