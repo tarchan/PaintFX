@@ -16,12 +16,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Worker;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
@@ -50,6 +52,7 @@ import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 import javax.imageio.ImageIO;
 
 /**
@@ -68,7 +71,8 @@ public class PaintFXController implements Initializable {
     private final Canvas canvas = new Canvas();
     private final FileChooser fileChooser = new FileChooser();
     private File savedFile;
-//    private List<Float> widths;
+    private WebView web = new WebView();
+    private PauseTransition pause = new PauseTransition();
     @FXML
     private ScrollPane scroll;
     @FXML
@@ -123,6 +127,14 @@ public class PaintFXController implements Initializable {
 //        Window window = scroll.getScene().getWindow();
 //        window.setOpacity(0.5);
         newImage(width, height);
+
+        pause.setDuration(Duration.millis(500));
+        pause.setOnFinished((ActionEvent event) -> {
+            logger.info(() -> "WebView captured: " + web);
+            Image image = web.snapshot(null, null);
+            group.getChildren().remove(web);
+            newImage(image);
+        });
 
 //        SVGPath svg = new SVGPath();
 //        svg.setContent("M70,50 L90,50 L120,90 L150,50 L170,50"
@@ -285,19 +297,21 @@ public class PaintFXController implements Initializable {
 //                GraphicsContext g = canvas.getGraphicsContext2D();
 //                g.appendSVGPath(svg.getContent());
                 // TODO SVGのイメージをキャンバスにコピー
-                WebView web = new WebView();
-                WebEngine engine = web.getEngine();
-                engine.getLoadWorker().stateProperty().addListener((ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) -> {
-                    logger.info(() -> "state=" + newValue);
-                    if (newValue == Worker.State.SUCCEEDED) {
-                        Image image = web.snapshot(null, null);
-//                        group.getChildren().remove(web);
-                        newImage(image);
-                        init.put("file", file.getPath());
-                    }
-                });
+//                WebView web = new WebView();
+//                WebEngine engine = web.getEngine();
+//                engine.getLoadWorker().stateProperty().addListener((ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) -> {
+//                    logger.info(() -> "state=" + newValue);
+//                    if (newValue == Worker.State.SUCCEEDED) {
+//                        Image image = web.snapshot(null, null);
+////                        group.getChildren().remove(web);
+//                        newImage(image);
+//                        init.put("file", file.getPath());
+//                    }
+//                });
                 group.getChildren().add(web);
-                engine.load(file.toURI().toString());
+                web.getEngine().load(file.toURI().toString());
+                pause.play();
+                init.put("file", file.getPath());
 //                Image image = web.snapshot(null, null);
 //                group.getChildren().remove(web);
                 return;
