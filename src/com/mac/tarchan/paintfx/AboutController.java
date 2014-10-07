@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 
 /**
  * FXML Controller class
@@ -21,12 +22,17 @@ import javafx.scene.control.Button;
 public class AboutController implements Initializable {
     @FXML
     private Button close;
+    @FXML
+    private Label title;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        String appName = PaintFX.class.getPackage().getImplementationTitle();
+        String appVersion = PaintFX.class.getPackage().getImplementationVersion();
+        title.setText(appName + " " + appVersion);
     }
 
     @FXML

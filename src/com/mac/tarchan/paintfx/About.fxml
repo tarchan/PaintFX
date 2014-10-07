@@ -7,9 +7,9 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<VBox id="VBox" alignment="CENTER" prefHeight="150.0" prefWidth="600.0" spacing="24.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.mac.tarchan.paintfx.AboutController">
+<VBox id="VBox" alignment="CENTER" prefHeight="150.0" prefWidth="600.0" spacing="24.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mac.tarchan.paintfx.AboutController">
   <children>
-    <Label text="PaintFX 1.0" VBox.vgrow="ALWAYS">
+    <Label fx:id="title" text="PaintFX 1.0" VBox.vgrow="ALWAYS">
       <font>
         <Font name="System Bold" size="48.0" />
       </font>
